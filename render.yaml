@@ -7,11 +7,8 @@ databases:
 services:
   - type: web
     name: laravel-blog
-    # Cache bust: force Render to recognize the native PHP env setting
-    env: php # Tells Render this is a native PHP environment
+    runtime: docker
     plan: free
-    buildCommand: "chmod +x build.sh && ./build.sh"
-    startCommand: "vendor/bin/heroku-php-apache2 public/"
     envVars:
       - key: APP_NAME
         value: BlogHub
