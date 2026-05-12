@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-card">
-    <form action="{{ route('admin.blogs.update', $blog) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.blogs.update', $blog) }}" method="POST" enctype="multipart/form-data" id="blog-form">
         @csrf
         @method('PUT')
 
@@ -59,13 +59,12 @@
 
         <div class="form-group">
             <label class="form-label" for="content">Content *</label>
-            <textarea id="content" name="content" class="form-control" required>{{ old('content', $blog->content) }}</textarea>
-            <p class="form-hint">HTML tags are supported for formatting</p>
+            <textarea id="content" name="content" class="form-control">{{ old('content', $blog->content) }}</textarea>
             @error('content') <p class="form-error">{{ $message }}</p> @enderror
         </div>
 
         <div style="display:flex;gap:12px;padding-top:8px;">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" id="submit-btn">
                 <i class="fas fa-save"></i> Update Post
             </button>
             <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Cancel</a>
@@ -73,7 +72,46 @@
     </form>
 </div>
 
+@endsection
+
+@section('scripts')
 <script>
+// ─── TinyMCE Initialization ─────────────────────────────────
+tinymce.init({
+    selector: '#content',
+    height: 420,
+    menubar: true,
+    skin: 'oxide',
+    content_css: 'default',
+    plugins: [
+        'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+        'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+        'insertdatetime', 'media', 'table', 'help', 'wordcount'
+    ],
+    toolbar: 'undo redo | blocks | ' +
+        'bold italic underline strikethrough | subscript superscript | ' +
+        'alignleft aligncenter alignright alignjustify | ' +
+        'bullist numlist outdent indent | ' +
+        'link image media table | ' +
+        'fullscreen code | removeformat help',
+    block_formats: 'Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4; Blockquote=blockquote; Preformatted=pre',
+    content_style: "body { font-family: 'Inter', system-ui, sans-serif; font-size: 16px; line-height: 1.75; color: #3d4250; }",
+    branding: false,
+    promotion: false,
+    setup: function (editor) {
+        // Sync content to textarea on every change
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    }
+});
+
+// Also sync on form submit as a safety net
+document.getElementById('blog-form').addEventListener('submit', function () {
+    tinymce.triggerSave();
+});
+
+// Image preview
 document.getElementById('image-input').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (file) {

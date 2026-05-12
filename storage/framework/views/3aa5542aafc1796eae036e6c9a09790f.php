@@ -1,23 +1,29 @@
-@extends('layouts.admin')
-@section('title', 'Create Post — BlogHub Admin')
+<?php $__env->startSection('title', 'Create Post — BlogHub Admin'); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="page-header">
     <h1 class="page-title">Create New Post</h1>
-    <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">
+    <a href="<?php echo e(route('admin.blogs.index')); ?>" class="btn btn-secondary">
         <i class="fas fa-arrow-left"></i> Back
     </a>
 </div>
 
 <div class="form-card">
-    <form action="{{ route('admin.blogs.store') }}" method="POST" enctype="multipart/form-data" id="blog-form">
-        @csrf
+    <form action="<?php echo e(route('admin.blogs.store')); ?>" method="POST" enctype="multipart/form-data" id="blog-form">
+        <?php echo csrf_field(); ?>
 
         <div class="form-group">
             <label class="form-label" for="title">Title *</label>
             <input type="text" id="title" name="title" class="form-control"
-                   value="{{ old('title') }}" placeholder="Enter blog title..." required>
-            @error('title') <p class="form-error">{{ $message }}</p> @enderror
+                   value="<?php echo e(old('title')); ?>" placeholder="Enter blog title..." required>
+            <?php $__errorArgs = ['title'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="form-error"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div class="form-group">
@@ -29,7 +35,14 @@
                 <input type="file" name="image" id="image-input" accept="image/*">
             </div>
             <img id="image-preview" class="image-preview" alt="Preview">
-            @error('image') <p class="form-error">{{ $message }}</p> @enderror
+            <?php $__errorArgs = ['image'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="form-error"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
@@ -37,38 +50,59 @@
                 <label class="form-label" for="category">Category *</label>
                 <select id="category" name="category" class="form-control" required>
                     <option value="">Select category</option>
-                    @foreach($categories as $cat)
-                        <option value="{{ $cat }}" {{ old('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
-                    @endforeach
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($cat); ?>" <?php echo e(old('category') == $cat ? 'selected' : ''); ?>><?php echo e($cat); ?></option>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
-                @error('category') <p class="form-error">{{ $message }}</p> @enderror
+                <?php $__errorArgs = ['category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="form-error"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
             <div class="form-group">
                 <label class="form-label" for="date">Date *</label>
                 <input type="date" id="date" name="date" class="form-control"
-                       value="{{ old('date', date('Y-m-d')) }}" required>
-                @error('date') <p class="form-error">{{ $message }}</p> @enderror
+                       value="<?php echo e(old('date', date('Y-m-d'))); ?>" required>
+                <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="form-error"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
             </div>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="content">Content *</label>
-            <textarea id="content" name="content" class="form-control">{{ old('content') }}</textarea>
-            @error('content') <p class="form-error">{{ $message }}</p> @enderror
+            <textarea id="content" name="content" class="form-control"><?php echo e(old('content')); ?></textarea>
+            <?php $__errorArgs = ['content'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> <p class="form-error"><?php echo e($message); ?></p> <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
         </div>
 
         <div style="display:flex;gap:12px;padding-top:8px;">
             <button type="submit" class="btn btn-primary" id="submit-btn">
                 <i class="fas fa-save"></i> Publish Post
             </button>
-            <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="<?php echo e(route('admin.blogs.index')); ?>" class="btn btn-secondary">Cancel</a>
         </div>
     </form>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script>
 // ─── TinyMCE Initialization ─────────────────────────────────
 tinymce.init({
@@ -119,4 +153,6 @@ document.getElementById('image-input').addEventListener('change', function(e) {
     }
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Blog project\resources\views/admin/blogs/create.blade.php ENDPATH**/ ?>
