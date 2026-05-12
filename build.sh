@@ -1,16 +1,10 @@
-#!/bin/bash
-
-# Clear existing cache before starting
-php artisan optimize:clear
-
-# Cache configuration, routes, and views
+#!/usr/bin/env bash
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan db:seed --force
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Run database migrations and seeding
-php artisan migrate --force
-php artisan db:seed --force
-
-# Start the web server in the foreground
+# Start Apache in the foreground so the Docker container doesn't exit immediately
 apache2-foreground
