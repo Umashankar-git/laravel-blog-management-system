@@ -57,7 +57,7 @@ class BlogController extends Controller
         }
 
         // Build pagination HTML
-        $pagination = $blogs->appends($request->query())->links()->render();
+        $pagination = $blogs->appends($request->query())->links('vendor.pagination.custom')->render();
 
         return response()->json([
             'html'         => $html,

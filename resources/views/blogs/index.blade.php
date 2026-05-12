@@ -75,7 +75,7 @@
         </div>
 
         <div class="pagination-wrapper" id="pagination-wrapper" aria-label="Pagination">
-            {{ $blogs->links() }}
+            {{ $blogs->links('vendor.pagination.custom') }}
         </div>
     </div>
 </section>

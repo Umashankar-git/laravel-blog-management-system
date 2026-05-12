@@ -1,13 +1,10 @@
 
 <article class="blog-card">
     <a href="<?php echo e(route('blogs.show', $blog->slug)); ?>" class="card-image" aria-label="Read <?php echo e($blog->title); ?>">
-        <?php if($blog->image): ?>
-            <img src="<?php echo e(asset('uploads/' . $blog->image)); ?>" alt="<?php echo e($blog->title); ?>" loading="lazy">
-        <?php else: ?>
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-subtle);">
-                <i class="fas fa-image" style="font-size:2.5rem;color:var(--text-muted);opacity:0.25;" aria-hidden="true"></i>
-            </div>
-        <?php endif; ?>
+        <img src="<?php echo e($blog->image ? asset('uploads/' . $blog->image) : 'https://picsum.photos/seed/' . $blog->id . '/800/420'); ?>"
+             alt="<?php echo e($blog->title); ?>"
+             loading="lazy"
+             onerror="this.onerror=null;this.src='https://picsum.photos/seed/fallback<?php echo e($blog->id); ?>/800/420';">
         <span class="card-category-badge"><?php echo e($blog->category); ?></span>
     </a>
     <div class="card-body">

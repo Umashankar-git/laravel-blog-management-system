@@ -73,7 +73,7 @@
         </div>
 
         <div class="pagination-wrapper" id="pagination-wrapper" aria-label="Pagination">
-            <?php echo e($blogs->links()); ?>
+            <?php echo e($blogs->links('vendor.pagination.custom')); ?>
 
         </div>
     </div>

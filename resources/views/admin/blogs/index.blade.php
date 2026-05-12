@@ -67,7 +67,7 @@
 
 <!-- Pagination -->
 <div style="display:flex;justify-content:center;padding:24px 0;">
-    {{ $blogs->appends(request()->query())->links() }}
+    {{ $blogs->appends(request()->query())->links('vendor.pagination.custom') }}
 </div>
 
 <!-- Delete Confirmation Modal -->
