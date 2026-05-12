@@ -36,8 +36,8 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Configure Apache to listen on Render's dynamic PORT
 RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
 
-# Create a startup script to run migrations and start Apache
-RUN echo '#!/bin/bash\nphp artisan optimize:clear\nphp artisan optimize\nphp artisan migrate --force\napache2-foreground' > /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
+# Set execution permissions for the startup script
+RUN chmod +x /var/www/html/build.sh
 
-CMD ["/usr/local/bin/start.sh"]
+# Start the application using the script
+CMD ["/var/www/html/build.sh"]
