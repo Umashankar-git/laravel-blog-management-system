@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-composer install --no-dev --optimize-autoloader
+composer install --optimize-autoloader
 php artisan migrate:fresh --seed --force
 php artisan config:cache
 php artisan route:cache
