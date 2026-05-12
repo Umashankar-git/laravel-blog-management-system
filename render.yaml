@@ -7,7 +7,7 @@ databases:
 services:
   - type: web
     name: laravel-blog
-    env: php
+    env: php # Tells Render this is a native PHP environment
     plan: free
     buildCommand: "chmod +x build.sh && ./build.sh"
     startCommand: "vendor/bin/heroku-php-apache2 public/"
@@ -21,7 +21,7 @@ services:
       - key: APP_DEBUG
         value: false
       - key: APP_URL
-        value: https://laravel-blog.onrender.com # Will be overridden by Render or custom domain
+        value: https://laravel-blog.onrender.com
       - key: LOG_CHANNEL
         value: stderr
       - key: DB_CONNECTION
